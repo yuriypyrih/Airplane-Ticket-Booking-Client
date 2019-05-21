@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Flight {
+public class Flight implements Serializable{
 
 	private TYPE type;
 	
@@ -23,10 +24,19 @@ public class Flight {
 		this.ticket_price = ticket_price;
 	}
 	
+	public String getDebugg() {
+		return id;
+	}
+	
 	public Object[] getObjectDataTable() {
 		return new Object[] {
 				type, id, departureFrom , arrivalAt, date, time, number_of_seat, ticket_price, "Book"
 		};
+	}
+	
+	public String toFile() {
+		String return_str = type.toString() + "|" + date +  "|" + time +  "|" + departureFrom +  "|" + arrivalAt +  "|" + id +  "|" + number_of_seat +  "|" + String.valueOf(ticket_price);
+		return return_str;
 	}
 
 	public TYPE getType() {

@@ -80,7 +80,8 @@ public class Window extends JFrame implements ActionListener {
 				card_view_top = new JPanel();
 				card_view_center = new JPanel(new BorderLayout());
 				
-			
+				search_table = new SearchTable(manager);
+				search_table.refreshSearchTable();
 				
 			
 				
@@ -95,17 +96,18 @@ public class Window extends JFrame implements ActionListener {
 				btn_sumbit = new JButton("Search");
 				btn_sumbit.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent e) {
+		            	
+		            	manager.sumbitFlight(tf_departure_from.getText(), tf_arrival_at.getText(), tf_date_departure.getText(), tf_date_arrival.getText());
+		            	
+		            	search_table.refreshSearchTable();
+		            	card_view_center.removeAll();
+		            	card_view_center.add(search_table.getJScrollPaneTable());
+		            	card_view_center.revalidate();
+		            	card_view_center.repaint();
+		            	
 		            	clearInput();
 		            	card_layout.show(mainPanel, VIEW_PANEL);
-		            	/*try {
-							manager.addObject(new Reservation(tf_first_name.getText(), tf_last_name.getText(), tf_phonenumber.getText(), tf_date_arrival.getText(),
-									comboboxRoom.getSelectedItem().toString(), btn_include_breakast.isSelected()));
-						} catch (IOException | ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-		            	clearInput();
-		            */ }
+		            	 }
 		        });
 				c.insets = new Insets(6,6,6,6);
 				c.fill = GridBagConstraints.HORIZONTAL;
@@ -142,7 +144,7 @@ public class Window extends JFrame implements ActionListener {
 				card_add.add(tf_date_arrival,c);
 				c.gridx = 0;
 				c.gridy = 5;
-				card_add.add(new JLabel("Passnagers"),c);
+				card_add.add(new JLabel("Passengers (int)"),c);
 				c.gridx = 1;
 				c.gridy = 5;
 				card_add.add(tf_number_of_passangers,c);
@@ -161,29 +163,15 @@ public class Window extends JFrame implements ActionListener {
 				btn_view_all = new JButton("View all flights");
 				btn_view_all.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent e) {
-		            	JOptionPane.showMessageDialog(null,"This button exists for debugging purposes only " );
-		            	/*
-		            	if(comboboxSearch.getSelectedIndex() == 0) {
-		            		try {
-								textarea_view.setText(manager.getAllList());
-							} catch (ClassNotFoundException | IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-		            	}
-		            	else if(comboboxSearch.getSelectedIndex() == 1) {
-		            		
-		            		String name = tf_search.getText();
-		            		try {
-								textarea_view.setText(manager.getByNameList(name));
-							} catch (ClassNotFoundException | IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-		            	}
+		            	JOptionPane.showMessageDialog(null,"This button exists for debugging purposes only.\nUse it to check whether your sumbitted search matches <<exactly>> the results " );
 		            	
-		            	clearInput();
-		            */ }
+		            	manager.sumbitAllFlight();
+		            	search_table.refreshSearchTable();
+		            	card_view_center.removeAll();
+		            	card_view_center.add(search_table.getJScrollPaneTable());
+		            	card_view_center.revalidate();
+		            	card_view_center.repaint();
+		            }
 		        });
 				
 				btn_back = new JButton("Go Back");
@@ -200,11 +188,9 @@ public class Window extends JFrame implements ActionListener {
 				card_view_top.add(new JLabel(" 		 Can't find a flight? Press this button to view all the flights "));
 				card_view_top.add(btn_view_all);
 				
+				//search_table = new SearchTable(manager);
 				
-				
-				search_table = new SearchTable(manager);
-				
-				search_table.refreshSearchTable();
+				//search_table.refreshSearchTable();
 			
 				card_view_center.add(search_table.getJScrollPaneTable());
 				
@@ -221,10 +207,7 @@ public class Window extends JFrame implements ActionListener {
 				frame.add(mainPanel);
 				frame.setVisible(true);
 			
-			
-				
-					
-		
+				clearInput();
 	}//end of Constructor
 
 
@@ -241,7 +224,7 @@ public class Window extends JFrame implements ActionListener {
 	}
 	
 	private void clearInput() {
-		DateFormat date_format = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat date_format = new SimpleDateFormat("dd/M/yyyy");
 		Date date = new Date();
 		
 	

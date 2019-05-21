@@ -8,18 +8,17 @@ public class Client {
 	
 	public static void main(String[] args) {
 		
-		Manager manager = new Manager();
-		new Window(WIDTH, HEIGHT,"Flight Booking Application", manager);
 		
-		/*
+		System.out.println("Client ready and running..");
+		
 		try {
-			String name = "//localhost/PhoneDirectory";
-			DirectoryOperations look_op = (DirectoryOperations)Naming.lookup(name);
-			//Contact c = look_op.searchNumber("Pappas");
-			//System.out.println(c.getName()+"->"+c.getNumber());
-			look_op.insertContact("Papadopoulos", "Vathi", "2273054321");
-			Contact c = look_op.searchNumber("Papadopoulos");
-			System.out.println(c.getName()+"->"+c.getNumber());
+			String name = "//localhost/FlightBooking";
+			FlightProcess look_op = (FlightProcess)Naming.lookup(name);
+			
+			Manager manager = new Manager(look_op);
+			new Window(WIDTH, HEIGHT,"Flight Booking Application", manager);
+			
+		
 		}
 		catch (NotBoundException ex) {
 			ex.printStackTrace();
@@ -29,6 +28,6 @@ public class Client {
 			ex.printStackTrace();
 		}
 		
-		*/
+		
 	}
 }

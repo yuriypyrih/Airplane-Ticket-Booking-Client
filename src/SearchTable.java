@@ -57,14 +57,7 @@ public class SearchTable {
         
         refreshSearchTable();
         
-		/*data = new Object[][]{
-				{"Hello"," World","Hello","Show more"},
-				{"Okey","Bey","Hello"," Show more"}
-		};*/
-		
-		
-       
-       
+
         
     }
 
@@ -75,14 +68,16 @@ public class SearchTable {
     
     
     public void refreshSearchTable(){
-    	//manager.addObject(new Flight(TYPE.FREE, "haha", "Okey","something","Athens" ,"DSAD","GFG", 400));
+    	//manager.addObject(new Flight(TYPE.FREE, "haha", "Okey","something","Athens" ,"WHY","GFG", 400));
+    	
     	Object[][] data;
-    	if(manager.get_flightList() != null) {
-    		int list_size = manager.get_flightList().size();
+    	if(manager.get_flight_list() != null) {
+    		int list_size = manager.get_flight_list().size();
         	int index = 0;
         	data = new Object[list_size][9];
         	
-        	for(Flight flight : manager.get_flightList() ) {
+        	for(Flight flight : manager.get_flight_list() ) {
+        		//System.out.println(flight.getDebugg());
         		data[index][0] = flight.getObjectDataTable()[0];
         		data[index][1] = flight.getObjectDataTable()[1];
         		data[index][2] = flight.getObjectDataTable()[2];
@@ -91,8 +86,9 @@ public class SearchTable {
         		data[index][5] = flight.getObjectDataTable()[5];
         		data[index][6] = flight.getObjectDataTable()[6];
         		data[index][7] = flight.getObjectDataTable()[7];
+        		data[index][8] = flight.getObjectDataTable()[8];
  
-        		System.out.println( flight.getObjectDataTable());
+        		//System.out.println( flight.getObjectDataTable());
         		index++;
         	}
         	
@@ -113,7 +109,7 @@ public class SearchTable {
         
          
          
-         System.out.println(table.getRowCount());
+        // System.out.println(table.getRowCount());
 
          scroll = new JScrollPane(table);
 
@@ -166,6 +162,7 @@ class ButtonEditor extends DefaultCellEditor {
         
         button = new JButton();
         button.setOpaque(true);
+        
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -188,13 +185,15 @@ class ButtonEditor extends DefaultCellEditor {
         label = (value == null) ? "" : value.toString();
         button.setText(label);
         isPushed = true;
+        
         return button;
     }
 
     @Override
     public Object getCellEditorValue() {
         if (isPushed) {
-            JOptionPane.showMessageDialog(null, label + ": Additional Info\n" );
+            JOptionPane.showMessageDialog(null, "Happy Travels!" );
+            manager.updateList(index);
          
         }
         isPushed = false;
